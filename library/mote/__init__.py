@@ -97,6 +97,26 @@ class Mote:
 
         self._channels[channel-1][index] = (r & 0xff, g & 0xff, b & 0xff)
 
+    def clear(self, channel=None):
+        """Clear the buffer of a specific or all channels
+
+        :param channel: If set, clear a specific channel, otherwise all (default None)
+
+        """
+
+        if channel is None:
+            for index, data in enumerate(self._channels):
+                if data is not None:
+                    self.clear(index+1)
+            return
+
+        if channel > 4 or channel < 1:
+            raise ValueError("Channel index must be between 1 and 4")
+        if self._channels[channel-1] is None:
+            raise ValueError("Please set up channel {channel} before using it!".format(channel=channel))
+
+        self._channels[channel-1] = [(0,0,0)] * len(self._channels[channel-1])
+
     def show(self):
         """Send the pixel buffer to the hardware"""
 
@@ -151,5 +171,4 @@ if __name__ == "__main__":
                 mote.set_pixel(channel + 1, pixel, r, g, b)
         mote.show()
         time.sleep(0.01)
-
 
