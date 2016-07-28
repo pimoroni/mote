@@ -77,6 +77,22 @@ class Mote:
         self.port.write(b'c')
         self.port.write(bytes([channel, num_pixels, self._channel_flags[channel -1]]))
 
+    def get_pixel(self, channel, index):
+        """Get the RGB colour of a single pixel, on a single channel
+
+        :param channel: Channel, either 1, 2, 3 or 4 corresponding to numbers on Mote
+
+        """
+
+        if channel > 4 or channel < 1:
+            raise ValueError("Channel index must be between 1 and 4")
+        if self._channels[channel-1] is None:
+            raise ValueError("Please set up channel {channel} before using it!".format(channel=channel))
+        if index >= len(self._channels[channel-1]):
+            raise ValueError("Pixel index must be < {length}".format(length=len(self._channels[channel-1])))
+
+        return self._channels[channel-1][index]
+
     def set_pixel(self, channel, index, r, g, b):
         """Set the RGB colour of a single pixel, on a single channel
 
@@ -140,35 +156,52 @@ if __name__ == "__main__":
     from colorsys import hsv_to_rgb
     mote = Mote()
 
-    mote.configure_channel(1, 16, False)
-    mote.configure_channel(2, 16, False)
-    mote.configure_channel(3, 16, False)
-    mote.configure_channel(4, 16, False)
+    num_pixels = 16
 
-    for channel in range(4):
-        for pixel in range(16):
-           mote.set_pixel(channel + 1, pixel, 255, 0, 0)
-           mote.show()
-           time.sleep(0.01)
+    mote.configure_channel(1, num_pixels, False)
+    mote.configure_channel(2, num_pixels, False)
+    mote.configure_channel(3, num_pixels, False)
+    mote.configure_channel(4, num_pixels, False)
 
-    for channel in range(4):
-        for pixel in range(16):
-           mote.set_pixel(channel + 1, pixel, 0, 255, 0)
-           mote.show()
-           time.sleep(0.01)
+    colors = [
+        (255,   0,   0),
+        (0,   255,   0),
+        (0,     0, 255),
+        (255, 255, 255)
+    ]
 
-    for channel in range(4):
-        for pixel in range(16):
-           mote.set_pixel(channel + 1, pixel, 0, 0, 255)
-           mote.show()
-           time.sleep(0.01)
+    try:
+        for step in range(4):
+            for channel in range(4):
+                for pixel in range(num_pixels):
+                    r, g, b = colors[channel]
+                    mote.set_pixel(channel + 1, pixel, r, g, b)
+                    mote.show()
+                    time.sleep(0.01)
 
-    for h in range(10000):
-        for channel in range(4):
-            for pixel in range(16):
-                hue = (h + (channel * 64) + (pixel * 4)) % 360
-                r, g, b = [int(c * 255) for c in hsv_to_rgb(hue/360.0, 1.0, 1.0)]
-                mote.set_pixel(channel + 1, pixel, r, g, b)
+            colors.append(colors.pop(0))
+
+        for step in range(170):
+            for channel in range(4):
+                for pixel in range(num_pixels):
+                    r, g, b = [int(c * 0.99) for c in mote.get_pixel(channel + 1, pixel)]
+                    mote.set_pixel(channel + 1, pixel, r, g, b)
+
+            time.sleep(0.001)
+            mote.show()
+
+        brightness = 0
+        for h in range(10000):
+            for channel in range(4):
+                for pixel in range(num_pixels):
+                    hue = (h + (channel * num_pixels * 4) + (pixel * 4)) % 360
+                    r, g, b = [int(c * brightness) for c in hsv_to_rgb(hue/360.0, 1.0, 1.0)]
+                    mote.set_pixel(channel + 1, pixel, r, g, b)
+            mote.show()
+            time.sleep(0.01)
+            if brightness < 255: brightness += 1
+
+    except KeyboardInterrupt:
+        mote.clear()
         mote.show()
-        time.sleep(0.01)
-
+        time.sleep(0.1)
