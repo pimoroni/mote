@@ -11,17 +11,25 @@ MAX_PIXELS = 512
 MAX_PIXELS_PER_CHANNEL = int(MAX_PIXELS / 4)
 
 class Mote:
+    """Represents a connected Mote device, communicating over USB serial.
 
-    def __init__(self):
-        """Initialize a new instance of Mote"""
+    The Mote class allows you to configure the 4 channels and set individual pixels.
 
+    It will attach to the first available Mote device unless `port_name` is specified at init.
+
+    :param port_name: Override auto-detect and specify an explicit port to use. Must be a complete path ie: /dev/tty.usbmodem1234 (default None)
+    """
+
+    def __init__(self, port_name=None):
+        self.port_name = port_name
         self._channels = [None] * 4
         self._channel_flags = [0] * 4
 
-        self.port_name = self._find_serial_port(VID, PID, NAME)
-
         if self.port_name is None:
-            raise IOError("Unable to find Mote device")
+            self.port_name = self._find_serial_port(VID, PID, NAME)
+
+            if self.port_name is None:
+                raise IOError("Unable to find Mote device")
 
         self.port = serial.Serial(self.port_name, 115200, timeout=1)
 
