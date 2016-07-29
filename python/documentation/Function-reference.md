@@ -52,7 +52,7 @@ channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote
 index: index of the pixel to set, starting at 0 (0-15 for 16 pixels sticks)  
 
 ```
-mote.set_pixel(1, 0)
+mote.get_pixel(1, 0)
 ```
 
 ###get_pixel_count
@@ -62,7 +62,7 @@ Gets the number of pixels a channel is configured to using a single parameter co
 channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote  
 
 ```
-get_pixel_count(1)
+mote.get_pixel_count(1)
 ```
 
 ###clear
