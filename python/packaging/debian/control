@@ -1,41 +1,39 @@
-Source: microdotphat
+Source: mote
 Maintainer: Phil Howard <phil@pimoroni.com>
-Homepage: https://github.com/pimoroni/microdot-phat
+Homepage: https://github.com/pimoroni/mote
 Section: python
 Priority: optional
-Build-Depends: debhelper (>= 9.0.0), dh-python, python-sphinx (>= 1.0.7+dfsg-1~), python-all (>= 2.7), python-setuptools, python3-all (>= 3.4), python3-setuptools
+Build-Depends: debhelper (>= 9.0.0), dh-python, python-sphinx (>= 1.2.3), python-sphinx-rtd-theme (>= 0.1.6), python-all (>= 2.7), python-setuptools, python3-all (>= 3.4), python3-setuptools
 Standards-Version: 3.9.6
 X-Python-Version: >= 2.7
 X-Python3-Version: >= 3.4
 
-Package: python-microdotphat
+Package: python-mote
 Architecture: all
 Section: python
-Depends: ${misc:Depends}, ${python:Depends}, python-smbus, python-numpy
-Suggests: i2c-tools
-Description: python library designed to control Micro Dot pHAT.
- The Micro Dot pHAT is an unashamedly old school LED matrix display board,
- with up to 30x7 pixels, using the Lite-On LTP-305 matrices.
+Depends: ${misc:Depends}, ${python:Depends}, python-serial (>= 2.6)
+Description: python library designed to control Mote.
+ Mote consists of a USB controller and up to four APA102 RGB LED strips,
+ with 16 pixels on each, for a total of 64 pixels per USB controller.
  .
  This is the Python 2 version of the package.
 
-Package: python3-microdotphat
+Package: python3-mote
 Architecture: all
 Section: python
-Depends: ${misc:Depends}, ${python3:Depends}, python3-smbus, python3-numpy
-Suggests: i2c-tools
-Description: python library designed to control Micro Dot pHAT.
- The Micro Dot pHAT is an unashamedly old school LED matrix display board,
- with up to 30x7 pixels, using the Lite-On LTP-305 matrices.
+Depends: ${misc:Depends}, ${python3:Depends}, python3-serial (>= 2.6)
+Description: python library designed to control Mote.
+ Mote consists of a USB controller and up to four APA102 RGB LED strips,
+ with 16 pixels on each, for a total of 64 pixels per USB controller.
  .
  This is the Python 3 version of the package.
 
-Package: python-microdotphat-doc
+Package: python-mote-doc
 Architecture: all
 Section: doc
 Depends: ${misc:Depends}, ${sphinxdoc:Depends}
-Description: Documentation for the microdotphat Python API
- The microdotphat python library is designed to control Micro Dot pHAT.
+Description: Documentation for the mote Python API
+ The mote python library is designed to control Mote.
  This package installs the documentation for the API as an html contents tree.
  .
  This is the version independent documentation for the package.
