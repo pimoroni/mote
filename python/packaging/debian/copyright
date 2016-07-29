@@ -1,6 +1,6 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: microdotphat
-Source: https://github.com/pimoroni/microdot-phat
+Upstream-Name: mote
+Source: https://github.com/pimoroni/mote
 
 Files: *
 Copyright: 2016 Pimoroni Ltd <phil@pimoroni.com>
