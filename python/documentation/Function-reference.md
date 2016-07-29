@@ -62,7 +62,7 @@ Gets the number of pixels a channel is configured to using a single parameter co
 channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote  
 
 ```
-get_pixel_count(1)
+mote.get_pixel_count(1)
 ```
 
 ###clear
