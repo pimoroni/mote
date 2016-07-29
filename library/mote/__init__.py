@@ -73,9 +73,28 @@ class Mote:
         self._channels[channel - 1] = [(0,0,0)] * num_pixels
         self._channel_flags[channel -1] = 1 if gamma_correction else 0
 
+        buf = bytearray()
+        buf.append(channel)
+        buf.append(num_pixels)
+        buf.append(self._channel_flags[channel -1])
+
         self.port.write(b'mote')
         self.port.write(b'c')
-        self.port.write(bytes([channel, num_pixels, self._channel_flags[channel -1]]))
+        self.port.write(buf)
+
+    def get_pixel_count(self, channel):
+        """Get the number of pixels a channel is configured to use
+
+        :param chanel: Channel, either 1, 2 3 or 4 corresponding to numbers on Mote
+
+        """
+
+        if channel > 4 or channel < 1:
+            raise ValueError("Channel index must be between 1 and 4")
+        if self._channels[channel-1] is None:
+            raise ValueError("Channel {channel} has not been set up".format(channel=channel))
+
+        return len(self._channels[channel-1])
 
     def get_pixel(self, channel, index):
         """Get the RGB colour of a single pixel, on a single channel
@@ -87,7 +106,7 @@ class Mote:
         if channel > 4 or channel < 1:
             raise ValueError("Channel index must be between 1 and 4")
         if self._channels[channel-1] is None:
-            raise ValueError("Please set up channel {channel} before using it!".format(channel=channel))
+            raise ValueError("Please set up channel {channel} before using it".format(channel=channel))
         if index >= len(self._channels[channel-1]):
             raise ValueError("Pixel index must be < {length}".format(length=len(self._channels[channel-1])))
 
