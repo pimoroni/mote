@@ -16,9 +16,9 @@ difficulty: Beginner
 
 Configures a channel using the following parameters:
 
-channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote
-num_pixels: number of pixels to configure for this channel
-gamma_correction: whether to enable gamma correction (default False)
+channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote  
+num_pixels: number of pixels to configure for this channel  
+gamma_correction: whether to enable gamma correction (default False)  
 
 ```
 from mote import Mote
@@ -33,9 +33,9 @@ This will create an instance of the Mote class to drive a 16 pixels APA102 stick
 
 Sets the RGB colour of a single pixel on a single channel, using the following parameters:
 
-channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote
-index: index of the pixel to set, starting at 0 (0-15 for 16 pixels sticks)
-r,g,b: amount of red/green/blue, from 0-255
+channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote  
+index: index of the pixel to set, starting at 0 (0-15 for 16 pixels sticks)  
+r,g,b: amount of red/green/blue, from 0-255  
 
 ```
 mote.set_pixel(1, 0, 255, 255, 255)
@@ -48,8 +48,8 @@ Note the show() method required to update all pixels after calling set_pixel.
 
 Gets the RGB colour of a single pixel on a single channel, using the following parameters:
 
-channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote
-index: index of the pixel to set, starting at 0 (0-15 for 16 pixels sticks)
+channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote  
+index: index of the pixel to set, starting at 0 (0-15 for 16 pixels sticks)  
 
 ```
 mote.set_pixel(1, 0)
@@ -59,7 +59,7 @@ mote.set_pixel(1, 0)
 
 Gets the number of pixels a channel is configured to using a single parameter corresponding to the channel to probe:
 
-channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote
+channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote  
 
 ```
 get_pixel_count(1)
