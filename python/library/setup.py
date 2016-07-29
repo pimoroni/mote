@@ -51,5 +51,5 @@ setup(
     py_modules      = [],
     packages        = ['mote'],
     include_package_data = True,
-    install_requires= []
+    install_requires= ['pyserial >= 2.6']
 )
