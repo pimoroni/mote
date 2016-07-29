@@ -1,7 +1,12 @@
-import serial
-import serial.tools.list_ports
-import time
 import sys
+import time
+
+try:
+    import serial
+    import serial.tools.list_ports
+except ImportError:
+    exit("This library requires the serial module\nInstall with: sudo pip install pyserial")
+
 
 VID = 0x16d0
 PID = 0x08c4
@@ -85,7 +90,7 @@ class Mote:
     def get_pixel_count(self, channel):
         """Get the number of pixels a channel is configured to use
 
-        :param chanel: Channel, either 1, 2 3 or 4 corresponding to numbers on Mote
+        :param channel: Channel, either 1, 2 3 or 4 corresponding to numbers on Mote
 
         """
 
@@ -100,6 +105,7 @@ class Mote:
         """Get the RGB colour of a single pixel, on a single channel
 
         :param channel: Channel, either 1, 2, 3 or 4 corresponding to numbers on Mote
+        :param index: Index of pixel to set, from 0 up
 
         """
 

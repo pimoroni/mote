@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+
 import time
 from colorsys import hsv_to_rgb
+
 from mote import Mote
+
 
 print("""Rainbow
 
