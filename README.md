@@ -1,0 +1,3 @@
+![Mote](mote-logo.png)
+
+
