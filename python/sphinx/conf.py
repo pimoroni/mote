@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Micro Dot pHAT documentation build configuration file, created by
+# Mote documentation build configuration file, created by
 # sphinx-quickstart on Mon Jul 25 16:22:10 2016.
 #
 # This file is execfile()d with the current directory set to its
