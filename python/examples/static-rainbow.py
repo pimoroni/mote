@@ -8,7 +8,7 @@ from mote import Mote
 
 print("""Rainbow
 
-Press Ctrl+C to exit.
+Press Ctrl+C to clear and exit.
 """)
 
 mote = Mote()
@@ -22,11 +22,12 @@ h = 1
 
 try:
     while True:
-        for channel in range(4):
-            for pixel in range(16):
-                hue = (h + (channel * 16 * 5) + (pixel * 5)) % 360
+        for channel in range(1,5):
+            pixel_count = mote.get_pixel_count(channel)
+            for pixel in range(pixel_count):
+                hue = (h + ((channel-1) * pixel_count * 5) + (pixel * 5)) % 360
                 r, g, b = [int(c * 255) for c in hsv_to_rgb(hue/360.0, 1.0, 1.0)]
-                mote.set_pixel(channel + 1, pixel, r, g, b)
+                mote.set_pixel(channel, pixel, r, g, b)
         mote.show()
         time.sleep(0.05)
 
