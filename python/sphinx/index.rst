@@ -33,6 +33,15 @@ Welcome to the Mote documentation.
 
    examples/*
 
+.. _section-hardware:
+
+.. toctree::
+   :maxdepth: 2
+   :glob:
+   :caption: Hardware
+
+   hardware/*
+
 
 Indices and tables
 ==================
