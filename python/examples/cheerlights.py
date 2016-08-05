@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 
 import time
-import requests
 from colorsys import hsv_to_rgb
+
+try:
+    import requests
+except ImportError:
+    exit("This script requires the requests module\nInstall with: sudo pip install requests")
+
 from mote import Mote
 
 
