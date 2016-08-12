@@ -5,12 +5,6 @@ from colorsys import hsv_to_rgb
 
 from mote import Mote
 
-
-print("""Rainbow
-
-Press Ctrl+C to exit.
-""")
-
 mote = Mote()
 
 mote.configure_channel(1, 16, False)
