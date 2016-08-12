@@ -15,6 +15,7 @@ newline() {
 }
 
 module="mote"
+binary="mote-demo"
 script="mote-demo.py"
 
 # check for pyinstaller
@@ -46,6 +47,8 @@ else
 fi
 
 pyinstaller --clean --onefile ./$script
-success "binary created in ./dist"
+rm ./$binary &> /dev/null
+cp ./dist/$binary ./
+success "$binary binary created"
 
 exit 0
