@@ -15,6 +15,7 @@ eggs/
 *.build
 *.changes
 *.orig.*
+*.spec
 packaging/*tar.xz
 library/debian/
 testing/
