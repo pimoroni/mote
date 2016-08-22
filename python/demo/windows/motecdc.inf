@@ -21,23 +21,23 @@ DefaultDestDir=12
 ; Windows 2000/XP/Vista-32bit Sections
 ;------------------------------------------------------------------------------
 
-[DriverInstall.nt]
+[DriverInstall.ntx86]
 include=mdmcpq.inf
-CopyFiles=DriverCopyFiles.nt
-AddReg=DriverInstall.nt.AddReg
+CopyFiles=DriverCopyFiles.ntx86
+AddReg=DriverInstall.ntx86.AddReg
 
-[DriverCopyFiles.nt]
+[DriverCopyFiles.ntx86]
 usbser.sys,,,0x20
 
-[DriverInstall.nt.AddReg]
+[DriverInstall.ntx86.AddReg]
 HKR,,DevLoader,,*ntkern
 HKR,,NTMPDriver,,%DRIVERFILENAME%.sys
 HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
 
-[DriverInstall.nt.Services]
-AddService=usbser, 0x00000002, DriverService.nt
+[DriverInstall.ntx86.Services]
+AddService=usbser, 0x00000002, DriverService.ntx86
 
-[DriverService.nt]
+[DriverService.ntx86]
 DisplayName=%SERVICE%
 ServiceType=1
 StartType=3
@@ -48,23 +48,23 @@ ServiceBinary=%12%\%DRIVERFILENAME%.sys
 ; Vista-64bit Sections
 ;------------------------------------------------------------------------------
 
-[DriverInstall.NTamd64]
+[DriverInstall.ntamd64]
 include=mdmcpq.inf
-CopyFiles=DriverCopyFiles.NTamd64
-AddReg=DriverInstall.NTamd64.AddReg
+CopyFiles=DriverCopyFiles.ntamd64
+AddReg=DriverInstall.ntamd64.AddReg
 
-[DriverCopyFiles.NTamd64]
+[DriverCopyFiles.ntamd64]
 %DRIVERFILENAME%.sys,,,0x20
 
-[DriverInstall.NTamd64.AddReg]
+[DriverInstall.ntamd64.AddReg]
 HKR,,DevLoader,,*ntkern
 HKR,,NTMPDriver,,%DRIVERFILENAME%.sys
 HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
 
-[DriverInstall.NTamd64.Services]
-AddService=usbser, 0x00000002, DriverService.NTamd64
+[DriverInstall.ntamd64.Services]
+AddService=usbser, 0x00000002, DriverService.ntamd64
 
-[DriverService.NTamd64]
+[DriverService.ntamd64]
 DisplayName=%SERVICE%
 ServiceType=1
 StartType=3
@@ -86,7 +86,7 @@ ServiceBinary=%12%\%DRIVERFILENAME%.sys
 [DeviceList]
 %DESCRIPTION%=DriverInstall, USB\VID_16D0&PID_08c4
 
-[DeviceList.NTamd64]
+[DeviceList.ntamd64]
 %DESCRIPTION% = DriverInstall, USB\VID_16D0&PID_08c4
 
 
@@ -96,9 +96,9 @@ ServiceBinary=%12%\%DRIVERFILENAME%.sys
 ;Modify these strings to customize your device
 ;------------------------------------------------------------------------------
 [Strings]
-MFGFILENAME="CDC"
+MFGFILENAME="motecdc"
 DRIVERFILENAME ="usbser"
 MFGNAME="Pimoroni Ltd"
 INSTDISK="Mote Driver Installer"
 DESCRIPTION="Mote COM Port"
-SERVICE="Mote Virtual COM Driver"
+SERVICE="USB Serial Driver"
