@@ -36,5 +36,6 @@ print("Setting Mote to {r},{g},{b}".format(r=r,g=g,b=b))
 for channel in range(4):
     for pixel in range(16):
         mote.set_pixel(channel + 1, pixel, r, g, b)
+    time.sleep(0.01)
 
 mote.show()
