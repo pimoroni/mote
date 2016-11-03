@@ -1,3 +1,8 @@
+0.0.2
+-----
+
+* Added PySerial as dependency
+
 0.0.1
 -----
 

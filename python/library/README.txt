@@ -1,3 +1,3 @@
 
-Learn more: https://shop.pimoroni.com/products/blinkt
+Learn more: https://shop.pimoroni.com/products/mote
 
