@@ -5,6 +5,7 @@ import time
 from colorsys import hsv_to_rgb
 from colorsys import rgb_to_hsv
 from copy import copy
+from sys import exit
 
 try:
     import requests
