@@ -1,5 +1,5 @@
-import sys
 import time
+from sys import exit
 
 try:
     import serial

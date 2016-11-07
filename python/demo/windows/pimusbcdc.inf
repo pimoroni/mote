@@ -1,0 +1,92 @@
+[Version]
+Signature="$Windows NT$"
+Class=Ports
+ClassGuid={4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider=%MFGNAME%
+LayoutFile=layout.inf
+CatalogFile=%MFGFILENAME%.cat
+DriverVer=08/22/2015,1.1.0
+
+[Manufacturer]
+%MFGNAME%=DeviceList,NTamd64
+
+[DestinationDirs]
+DefaultDestDir=12
+
+;------------------------------------------------------------------------------
+; 32bit Sections
+;------------------------------------------------------------------------------
+
+[DriverInstall.ntx86]
+include=mdmcpq.inf
+CopyFiles=DriverCopyFiles.ntx86
+AddReg=DriverInstall.ntx86.AddReg
+
+[DriverCopyFiles.ntx86]
+usbser.sys,,,0x20
+
+[DriverInstall.ntx86.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,%DRIVERFILENAME%.sys
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[DriverInstall.ntx86.Services]
+AddService=usbser,0x00000002,DriverService.ntx86
+
+[DriverService.ntx86]
+DisplayName=%SERVICE%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\%DRIVERFILENAME%.sys
+
+;------------------------------------------------------------------------------
+; 64bit Sections
+;------------------------------------------------------------------------------
+
+[DriverInstall.ntamd64]
+include=mdmcpq.inf
+CopyFiles=DriverCopyFiles.ntamd64
+AddReg=DriverInstall.ntamd64.AddReg
+
+[DriverCopyFiles.ntamd64]
+%DRIVERFILENAME%.sys,,,0x20
+
+[DriverInstall.ntamd64.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,%DRIVERFILENAME%.sys
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[DriverInstall.ntamd64.Services]
+AddService=usbser,0x00000002,DriverService.ntamd64
+
+[DriverService.ntamd64]
+DisplayName=%SERVICE%
+ServiceType=1
+StartType=3
+ErrorControl=1
+ServiceBinary=%12%\%DRIVERFILENAME%.sys
+
+;------------------------------------------------------------------------------
+; Vendor and Product ID Definitions
+;------------------------------------------------------------------------------
+
+[SourceDisksFiles]
+[SourceDisksNames]
+
+[DeviceList.ntx86]
+%DESCRIPTION%=DriverInstall,USB\VID_16D0&PID_08C3,USB\VID_16D0&PID_08C4
+
+[DeviceList.ntamd64]
+%DESCRIPTION%=DriverInstall,USB\VID_16D0&PID_08C3,USB\VID_16D0&PID_08C4
+
+;------------------------------------------------------------------------------
+; String Definitions
+;------------------------------------------------------------------------------
+
+[Strings]
+MFGFILENAME="pimusbcdc"
+DRIVERFILENAME ="usbser"
+MFGNAME="Pimoroni Ltd"
+DESCRIPTION="Pimoroni USB COM Port"
+SERVICE="USB Serial Driver"
