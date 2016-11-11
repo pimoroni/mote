@@ -1,3 +1,9 @@
+0.0.3
+-----
+
+* Added __version__ to module
+* Initial release to Raspbian apt repository
+
 0.0.2
 -----
 

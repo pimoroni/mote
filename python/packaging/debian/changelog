@@ -1,3 +1,10 @@
+mote (0.0.3) stable; urgency=low
+
+  * Added __version__ to module
+  * Initial release to Raspbian apt repository
+
+ -- Phil Howard <phil@pimoroni.com>  Thu, 10 Nov 2016 00:00:00 +0000
+
 mote (0.0.2) UNRELEASED; urgency=low
 
   * Added PySerial as dependency
