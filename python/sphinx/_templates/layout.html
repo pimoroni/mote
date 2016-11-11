@@ -1,0 +1,66 @@
+{% extends "!layout.html" %}
+{% block extrahead %}
+	<link rel="stylesheet" href="{{ pathto("_static/custom.css", True) }}" type="text/css">
+{% endblock %}
+{% block menu %}
+<p class="caption"><span class="caption-text">Introduction</span></p>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="#welcome">Welcome</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="#module-mote">At A Glance</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Reference</span></p>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="#create-a-class-instance">Create A Class Instance</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="#configure-a-channel">Configure A Channel</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="#set-a-pixel">Set A Pixel</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="#get-pixel-count">Get Pixel Count</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="#show">Show</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="#clear-mote">Clear Mote</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Hardware</span></p>
+<ul>
+	<li class="toctree-l1"><a class="reference internal" href="#mote-usb-host">Mote USB Host</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="#lighting-ports">Lighting Ports</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="#programming-header">Programming Header</a></li>
+	<li class="toctree-l1"><a class="reference internal" href="#pixel-apa-102-mote-stick">Mote Stick</a></li>
+</ul>
+{% endblock %}
+{% block footer %}
+<script type="text/javascript">
+	var menuItems = $('.wy-menu-vertical').find('a');
+
+	var scrollItems = menuItems.map(function(){
+		var item = $($(this).attr('href'));
+		if (item.length) { return item; }
+	});
+
+	$(window).on('scroll',function(){
+		var fromTop = $(this).scrollTop()
+
+		var cur = scrollItems.map(function(){
+			if ($(this).offset().top < fromTop+30) return this;
+		});
+
+		cur = cur[cur.length-1];
+		var id = cur && cur.length ? cur[0].id : "";
+
+		var target = $('#'+id);
+		target.attr('id','');
+		window.location.hash = '#'+id;
+		target.attr('id',id);
+
+		menuItems
+			.parent().removeClass("current")
+			.end().filter("[href='#"+id+"']").parent().addClass("current");
+	});
+
+	$(window).on('hashchange',function(){
+
+		var hash = window.location.hash.replace('#','');
+
+		menuItems
+			.parent().removeClass("current")
+			.end().filter("[href='#"+hash+"']").parent().addClass("current");
+	})
+</script>
+{% endblock %}
