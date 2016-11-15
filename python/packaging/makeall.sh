@@ -2,7 +2,7 @@
 
 # script control variables
 
-reponame="" # leave this blank for auto-detection
+reponame="mote" # leave this blank for auto-detection
 libname="" # leave this blank for auto-detection
 packagename="" # leave this blank for auto-selection
 
