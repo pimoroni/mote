@@ -29,7 +29,7 @@ We've created a super-easy installation script that will install all pre-requisi
 In the new terminal window type:
 
 ```bash
-curl -sS get.pimoroni.com/mote | bash
+curl -sS https://get.pimoroni.com/mote | bash
 ```
 
 If you choose to download examples you'll find them in `/home/pi/Pimoroni/mote/`.
