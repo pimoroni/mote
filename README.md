@@ -45,3 +45,9 @@ sudo apt-get install python3-mote
 ```bash
 sudo apt-get install python-mote
 ```
+
+## Documentation & Support
+
+* Getting started - https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-mote
+* Function & hardware reference - http://docs.pimoroni.com/mote/
+* Get help - http://forums.pimoroni.com/c/support
