@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from colorsys import hsv_to_rgb, rgb_to_hsv
+from sys import exit
 
 try:
     from flask import Flask, jsonify, make_response
