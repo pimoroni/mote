@@ -1,6 +1,15 @@
+#!/usr/bin/env python
+
 from colorsys import hsv_to_rgb, rgb_to_hsv
+from sys import exit
+
+try:
+    from flask import Flask, jsonify, make_response
+except ImportError:
+    exit("This script requires the flask module\nInstall with: sudo pip install flask")
+
 from mote import Mote
-from flask import Flask, jsonify, make_response
+
 
 ## Create app, Mote instance
 app = Flask(__name__)
