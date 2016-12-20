@@ -21,6 +21,10 @@ mote.configure_channel(2, 16, False)
 mote.configure_channel(3, 16, False)
 mote.configure_channel(4, 16, False)
 
+# Define baseurl and current API version
+baseurl = "/mote/api/"
+version = "v1.0"
+
 ## Default status to initialise with - all channels off, white, full brightness
 status = {'state': {1: 0, 2: 0, 3: 0, 4: 0},
           'colour': {1: [255, 255, 255], 2: [255, 255, 255], 3: [255, 255, 255], 4: [255, 255, 255]},
@@ -55,7 +59,7 @@ def mote_off(status):
     return True
 
 ## Returns, in JSON, the state of the given channel, or all channels
-@app.route('/mote/api/v1.0/channel/<string:channel>/state', methods=['GET'])
+@app.route(baseurl + version + '/channel/<string:channel>/state', methods=['GET'])
 def get_state(channel):
     global status
     for chan in range(1, 5):
@@ -77,7 +81,7 @@ def get_state(channel):
         return jsonify(channel_status)
 
 ## Sets all channels, or a given channel, "on" or "off"
-@app.route('/mote/api/v1.0/channel/<string:channel>/state/<string:st>', methods=['GET'])
+@app.route(baseurl + version + '/channel/<string:channel>/state/<string:st>', methods=['GET'])
 def set_state(channel, st):
     global status
     if st == 'on':
@@ -97,7 +101,7 @@ def set_state(channel, st):
     return jsonify(status)
 
 ## Returns the currently set colours for a specific channel or all channels
-@app.route('/mote/api/v1.0/channel/<string:channel>/colour', methods=['GET'])
+@app.route(baseurl + version + '/channel/<string:channel>/colour', methods=['GET'])
 def get_colour(channel):
     global status
     if channel == 'all':
@@ -106,7 +110,7 @@ def get_colour(channel):
         return jsonify({channel: status['colour'][int(channel)]})
 
 ## Sets a colour for a specific channel or all channels
-@app.route('/mote/api/v1.0/channel/<string:channel>/colour/<string:c>', methods=['GET'])
+@app.route(baseurl + version + '/channel/<string:channel>/colour/<string:c>', methods=['GET'])
 def set_colour(channel, c):
     global status
     if channel == 'all':
@@ -122,7 +126,7 @@ def set_colour(channel, c):
 
 ## Sets the brightness for a channel or all channels, by converting to HSV, 
 ## modifying the V, and then converting back to RGB, and setting that colour
-@app.route('/mote/api/v1.0/channel/<string:channel>/brightness/<string:br>', methods=['GET'])
+@app.route(baseurl + version + '/channel/<string:channel>/brightness/<string:br>', methods=['GET'])
 def set_brightness(channel, br):
     global status
     if channel == 'all':
@@ -145,6 +149,11 @@ def set_brightness(channel, br):
         if not status['state'][int(channel)] == 0:
             mote_on(status)
     return jsonify(status)
+
+## Returns the current API version to the requester
+@app.route(baseurl, methods=['GET'])
+def get_version():
+    return jsonify({'mote-api-version': version})
 
 ## Catches page not found errors, returns 404
 @app.errorhandler(404)
