@@ -28,8 +28,10 @@ class Mote:
 
     def __init__(self, port_name=None):
         self.port_name = port_name
-        self._channels = [None] * 4
-        self._channel_flags = [0] * 4
+        self._channel_count = 4
+        self._channels = [None] * self._channel_count
+        self._channel_flags = [0] * self._channel_count
+        self._clear_on_exit = False
 
         if self.port_name is None:
             self.port_name = self._find_serial_port(VID, PID, NAME)
@@ -71,12 +73,12 @@ class Mote:
 
         """
 
-        if channel > 4 or channel < 1:
-            raise ValueError("Channel index must be between 1 and 4")
+        if channel > self._channel_count or channel < 1:
+            raise ValueError("Channel index must be between 1 and {}".format(self._channel_count))
         if num_pixels > MAX_PIXELS_PER_CHANNEL:
             raise ValueError("Number of pixels can not be more than {max}".format(max=MAX_PIXELS_PER_CHANNEL))
 
-        self._channels[channel - 1] = [(0,0,0)] * num_pixels
+        self._channels[channel - 1] = [(0,0,0,1.0)] * num_pixels
         self._channel_flags[channel -1] = 1 if gamma_correction else 0
 
         buf = bytearray()
@@ -95,7 +97,7 @@ class Mote:
 
         """
 
-        if channel > 4 or channel < 1:
+        if channel > self._channel_count or channel < 1:
             raise ValueError("Channel index must be between 1 and 4")
         if self._channels[channel-1] is None:
             raise ValueError("Channel {channel} has not been set up".format(channel=channel))
@@ -110,16 +112,18 @@ class Mote:
 
         """
 
-        if channel > 4 or channel < 1:
+        if channel > self._channel_count or channel < 1:
             raise ValueError("Channel index must be between 1 and 4")
+
         if self._channels[channel-1] is None:
             raise ValueError("Please set up channel {channel} before using it".format(channel=channel))
+
         if index >= len(self._channels[channel-1]):
             raise ValueError("Pixel index must be < {length}".format(length=len(self._channels[channel-1])))
 
         return self._channels[channel-1][index]
 
-    def set_pixel(self, channel, index, r, g, b):
+    def set_pixel(self, channel, index, r, g, b, brightness=None):
         """Set the RGB colour of a single pixel, on a single channel
 
         :param channel: Channel, either 1, 2, 3 or 4 corresponding to numbers on Mote
@@ -127,17 +131,23 @@ class Mote:
         :param r: Amount of red: 0-255
         :param g: Amount of green: 0-255
         :param b: Amount of blue: 0-255
+        :param brightness: (Optional) brightness of pixel from 0.0 to 1.0. Will scale R,G,B accordingly.
 
         """
 
-        if channel > 4 or channel < 1:
+        if channel > self._channel_count or channel < 1:
             raise ValueError("Channel index must be between 1 and 4")
+
         if self._channels[channel-1] is None:
             raise ValueError("Please set up channel {channel} before using it!".format(channel=channel))
+
         if index >= len(self._channels[channel-1]):
             raise ValueError("Pixel index must be < {length}".format(length=len(self._channels[channel-1])))
 
-        self._channels[channel-1][index] = (r & 0xff, g & 0xff, b & 0xff)
+        if brightness is None and self._channels[channel-1][index] is not None:
+            brightness = self._channels[channel-1][index][3]
+
+        self._channels[channel-1][index] = (r & 0xff, g & 0xff, b & 0xff,  brightness)
 
     def clear(self, channel=None):
         """Clear the buffer of a specific or all channels
@@ -152,12 +162,13 @@ class Mote:
                     self.clear(index+1)
             return
 
-        if channel > 4 or channel < 1:
+        if channel > self._channel_count or channel < 1:
             raise ValueError("Channel index must be between 1 and 4")
+
         if self._channels[channel-1] is None:
             raise ValueError("Please set up channel {channel} before using it!".format(channel=channel))
 
-        self._channels[channel-1] = [(0,0,0)] * len(self._channels[channel-1])
+        self._channels[channel-1] = [(0,0,0,1.0)] * len(self._channels[channel-1])
 
     def show(self):
         """Send the pixel buffer to the hardware"""
@@ -166,15 +177,68 @@ class Mote:
         for index, data in enumerate(self._channels):
             if data is None: continue
             for pixel in data:
-                buf.append(pixel[2])
-                buf.append(pixel[1])
-                buf.append(pixel[0]) 
+                r, g, b, brightness = pixel
+                r, g, b = [int(x * brightness) for x in (r, g, b)]
+                buf.append(b)
+                buf.append(r)
+                buf.append(g) 
 
         self.port.write(b'mote')
         self.port.write(b'o')
         self.port.write(buf)
 
+    def set_all(self, r, g, b, brightness=None):
+        """Set the colour of all pixels
+
+        This sets the brightness of each pixel individually, it can be overriden
+        by supplying the brightness argument to set_pixel.
+
+        :param brightness: (Optional) brightness: 0.0 to 1.0, existing value will be kept if unspecified
+        
+        """
+
+        for channel in range(self._channel_count):
+            pixels = self.get_pixel_count(channel + 1)
+            for pixel in range(pixels):
+                o_br = self._channels[channel][pixel][3]
+                self._channels[channel][pixel] = (r, g, b, brightness if brightness is not None else o_br)
+
+    def set_brightness(self, brightness):
+        """Set the brightness of all pixels
+
+        This sets the brightness of each pixel individually, it can be overriden
+        by supplying the brightness argument to set_pixel.
+
+        :param brightness: Brightness: 0.0 to 1.0
+        
+        """
+
+        if not 0.0 <= brightness <= 1.0:
+            raise ValueError("Brightness should be between 0.0 and 1.0, was: {}".format(brightness))
+
+        for channel in range(self._channel_count):
+            pixels = self.get_pixel_count(channel + 1)
+            for pixel in range(pixels):
+                r, g, b, br = self._channels[channel][pixel]
+                self._channels[channel][pixel] = (r, g, b, brightness)
+
+    def set_clear_on_exit(self, value=True):
+        """Set whether Mote should be cleared upon exit.
+
+        By default Mote will leave the pixels on upon exit, but calling::
+
+            mote.set_clear_on_exit()
+
+        Will ensure that they are cleared.
+        
+        """
+
+        self._clear_on_exit = value
+
     def __exit__(self):
+        if self._clear_on_exit:
+            self.clear()
+
         self.port.close()
 
 
