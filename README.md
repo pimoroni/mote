@@ -71,5 +71,4 @@ In all cases you will have to enable the i2c bus.
 
 * Guides and tutorials - https://learn.pimoroni.com/mote
 * Function reference - http://docs.pimoroni.com/mote/
-* GPIO Pinout - https://pinout.xyz/pinout/mote
 * Get help - http://forums.pimoroni.com/c/support
