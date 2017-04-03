@@ -1,9 +1,9 @@
 ![Mote](mote-logo.png)
 Buy the Mote controller & accessories here: https://shop.pimoroni.com/products/mote
 
-## Installation
+# Installation
 
-### Windows/Linux/Mac
+## Windows/Linux/Mac
 
 Install the mote library with pip, like so:
 
@@ -17,7 +17,7 @@ Or,
 pip3 install mote
 ```
 
-### Raspberry Pi (Raspbian)
+## Raspberry Pi (Raspbian)
 
 ### Full install (recommended):
 
