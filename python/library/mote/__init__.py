@@ -180,8 +180,8 @@ class Mote:
                 r, g, b, brightness = pixel
                 r, g, b = [int(x * brightness) for x in (r, g, b)]
                 buf.append(b)
-                buf.append(r)
-                buf.append(g) 
+                buf.append(g)
+                buf.append(r) 
 
         self.port.write(b'mote')
         self.port.write(b'o')
