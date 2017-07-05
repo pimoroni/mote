@@ -26,12 +26,14 @@ class Mote:
     :param port_name: Override auto-detect and specify an explicit port to use. Must be a complete path ie: /dev/tty.usbmodem1234 (default None)
     """
 
-    def __init__(self, port_name=None):
+    def __init__(self, port_name=None, white_point=(1.0, 1.0, 1.0)):
         self.port_name = port_name
         self._channel_count = 4
         self._channels = [None] * self._channel_count
         self._channel_flags = [0] * self._channel_count
         self._clear_on_exit = False
+
+        self.white_point = white_point
 
         if self.port_name is None:
             self.port_name = self._find_serial_port(VID, PID, NAME)
@@ -123,6 +125,17 @@ class Mote:
 
         return self._channels[channel-1][index]
 
+    def set_white_point(self, r, g, b):
+        """Set the white point.
+
+        :param r: Red amount, from 0.0 to 1.0
+        :param g: Green amount, from 0.0 to 1.0
+        :param b: Blue amount, from 0.0 to 1.0
+
+        """
+
+        self.white_point = (r, g, b)
+
     def set_pixel(self, channel, index, r, g, b, brightness=None):
         """Set the RGB colour of a single pixel, on a single channel
 
@@ -173,12 +186,13 @@ class Mote:
     def show(self):
         """Send the pixel buffer to the hardware"""
 
-        buf = bytearray()
+        buf = bytearray() 
         for index, data in enumerate(self._channels):
             if data is None: continue
+
             for pixel in data:
                 r, g, b, brightness = pixel
-                r, g, b = [int(x * brightness) for x in (r, g, b)]
+                r, g, b = [int(x * brightness * self.white_point[i]) for i, x in enumerate([r, g, b])]
                 buf.append(b)
                 buf.append(g)
                 buf.append(r) 
