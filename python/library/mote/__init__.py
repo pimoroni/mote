@@ -201,21 +201,27 @@ class Mote:
         self.port.write(b'o')
         self.port.write(buf)
 
-    def set_all(self, r, g, b, brightness=None):
-        """Set the colour of all pixels
+    def set_all(r, g, b, brightness=None, channel=None):
+        """Set the RGB value and optionally brightness of all pixels
 
-        This sets the brightness of each pixel individually, it can be overriden
-        by supplying the brightness argument to set_pixel.
+        If you don't supply a brightness value, the last value set for each pixel be kept.
 
-        :param brightness: (Optional) brightness: 0.0 to 1.0, existing value will be kept if unspecified
-        
+        :param r: Amount of red: 0 to 255
+        :param g: Amount of green: 0 to 255
+        :param b: Amount of blue: 0 to 255
+        :param brightness: Brightness: 0.0 to 1.0 (default around 0.2)
+        :param channel: Optional channel: 1, 2, 3 or 4 (default to all)
+
         """
 
-        for channel in range(self._channel_count):
-            pixels = self.get_pixel_count(channel + 1)
-            for pixel in range(pixels):
-                o_br = self._channels[channel][pixel][3]
-                self._channels[channel][pixel] = (r, g, b, brightness if brightness is not None else o_br)
+        if channel in range(1, NUM_CHANNELS+1):
+            for x in range(NUM_PIXELS_PER_CHANNEL):
+                self.set_pixel(channel, x, r, g, b, brightness)
+            return
+
+        for c in range(1, NUM_CHANNELS+1):
+            for x in range(NUM_PIXELS_PER_CHANNEL):
+                self.set_pixel(c, x, r, g, b, brightness)
 
     def set_brightness(self, brightness):
         """Set the brightness of all pixels
