@@ -72,3 +72,7 @@ In all cases you will have to enable the i2c bus.
 * Guides and tutorials - https://learn.pimoroni.com/mote
 * Function reference - http://docs.pimoroni.com/mote/
 * Get help - http://forums.pimoroni.com/c/support
+
+## Unofficial / Third-party libraries
+
+* Rust library by Tiziano Santoro - https://github.com/tiziano88/mote-rs
