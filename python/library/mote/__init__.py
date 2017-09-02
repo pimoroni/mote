@@ -1,5 +1,5 @@
-import sys
 import time
+from sys import exit
 
 try:
     import serial
@@ -7,6 +7,7 @@ try:
 except ImportError:
     exit("This library requires the serial module\nInstall with: sudo pip install pyserial")
 
+__version__ = '0.0.3'
 
 VID = 0x16d0
 PID = 0x08c4

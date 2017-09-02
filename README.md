@@ -8,11 +8,19 @@ Buy the Mote controller & accessories here: https://shop.pimoroni.com/products/m
 
 Install the mote library with pip, like so:
 
-```
+```bash
 pip install mote
 ```
 
+Or,
+
+```bash
+pip3 install mote
+```
+
 ###Raspberry Pi (Raspbian)
+
+**Full install ( recommended ):**
 
 We've created a super-easy installation script that will install all pre-requisites and get your Mote up and running in a jiffy. To run it fire up Terminal which you'll find in Menu -> Accessories -> Terminal on your Raspberry Pi desktop like so:
 
@@ -21,8 +29,25 @@ We've created a super-easy installation script that will install all pre-requisi
 In the new terminal window type:
 
 ```bash
-curl -sS get.pimoroni.com/mote | bash
+curl -sS https://get.pimoroni.com/mote | bash
 ```
 
-If you choose to download examples you'll find them in `/home/pi/Pimoroni/mote/examples`.
+If you choose to download examples you'll find them in `/home/pi/Pimoroni/mote/`.
 
+**Library install for Python 3:**
+
+```bash
+sudo apt-get install python3-mote
+```
+
+**Library install for Python 2:**
+
+```bash
+sudo apt-get install python-mote
+```
+
+## Documentation & Support
+
+* Getting started - https://learn.pimoroni.com/tutorial/sandyj/getting-started-with-mote
+* Function & hardware reference - http://docs.pimoroni.com/mote/
+* Get help - http://forums.pimoroni.com/c/support

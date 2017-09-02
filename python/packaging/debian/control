@@ -2,8 +2,8 @@ Source: mote
 Maintainer: Phil Howard <phil@pimoroni.com>
 Homepage: https://github.com/pimoroni/mote
 Section: python
-Priority: optional
-Build-Depends: debhelper (>= 9.0.0), dh-python, python-sphinx (>= 1.2.3), python-sphinx-rtd-theme (>= 0.1.6), python-all (>= 2.7), python-setuptools, python3-all (>= 3.4), python3-setuptools
+Priority: extra
+Build-Depends: debhelper (>= 9.0.0), dh-python, python-all (>= 2.7), python-setuptools, python3-all (>= 3.4), python3-setuptools
 Standards-Version: 3.9.6
 X-Python-Version: >= 2.7
 X-Python3-Version: >= 3.4
@@ -27,13 +27,3 @@ Description: python library designed to control Mote.
  with 16 pixels on each, for a total of 64 pixels per USB controller.
  .
  This is the Python 3 version of the package.
-
-Package: python-mote-doc
-Architecture: all
-Section: doc
-Depends: ${misc:Depends}, ${sphinxdoc:Depends}
-Description: Documentation for the mote Python API
- The mote python library is designed to control Mote.
- This package installs the documentation for the API as an html contents tree.
- .
- This is the version independent documentation for the package.
