@@ -35,7 +35,7 @@ try:
         channel = 1
         for col in f:
             col = col['field2']
-            r, g, b = tuple(ord(c) for c in col[1:].lower().decode('hex'))
+            r, g, b = bytearray.fromhex(col.lstrip('#'))
             for pixel in range(mote.get_pixel_count(channel)):
                 mote.set_pixel(channel, pixel, r, g, b)
             channel += 1        

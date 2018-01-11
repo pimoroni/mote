@@ -43,7 +43,7 @@ try:
         channel = 1
         for col in f:
             col = col['field2']
-            r, g, b = tuple(ord(c) for c in col[1:].lower().decode('hex'))
+            r, g, b = bytearray.fromhex(col.lstrip('#'))
             h,s,v = rgb_to_hsv(r,g,b)
             channels_colour_rgb[channel - 1][0] = r
             channels_colour_rgb[channel - 1][1] = g
