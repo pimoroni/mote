@@ -5,7 +5,7 @@ try:
     import serial
     import serial.tools.list_ports
 except ImportError:
-    exit("This library requires the serial module\nInstall with: sudo pip install pyserial")
+    raise ImportError("This library requires the serial module\nInstall with: sudo pip install pyserial")
 
 __version__ = '0.0.3'
 
