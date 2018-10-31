@@ -1,3 +1,11 @@
+0.0.4
+-----
+
+* Feature: added set_all
+* Feature: added set_white_point
+* Feature: added optional clear on exit
+* Feature: added brightness support to set_pixel
+
 0.0.3
 -----
 

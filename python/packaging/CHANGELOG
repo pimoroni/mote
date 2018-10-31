@@ -1,3 +1,12 @@
+mote (0.0.4) stable; urgency=low
+
+  * Feature: added set_all
+  * Feature: added set_white_point
+  * Feature: added optional clear on exit
+  * Feature: added brightness support to set_pixel
+
+ -- Phil Howard <phil@pimoroni.com>  Wed, 31 Oct 2018 00:00:00 +0000
+
 mote (0.0.3) stable; urgency=low
 
   * Added __version__ to module
