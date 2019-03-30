@@ -5,6 +5,12 @@ from colorsys import hsv_to_rgb
 
 from mote import Mote
 
+print("""Test
+
+Press Ctrl+C to exit.
+""")
+
+
 
 mote = Mote()
 
@@ -38,7 +44,7 @@ try:
     for step in range(170):
         for channel in range(4):
             for pixel in range(mote.get_pixel_count(channel + 1)):
-                r, g, b = [int(c * 0.99) for c in mote.get_pixel(channel + 1, pixel)]
+                r, g, b, z = [int(c * 0.99) for c in mote.get_pixel(channel + 1, pixel)]
                 mote.set_pixel(channel + 1, pixel, r, g, b)
 
         time.sleep(0.001)
@@ -55,6 +61,9 @@ try:
         mote.show()
         time.sleep(0.01)
         if brightness < 255: brightness += 1
+
+    mote.clear()
+    mote.show()
 
 except KeyboardInterrupt:
     mote.clear()
