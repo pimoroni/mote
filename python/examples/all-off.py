@@ -1,4 +1,5 @@
-#turns off all leds
+#!/usr/bin/env python
+# Turns off all leds
 from mote import Mote
 
 mote = Mote()
