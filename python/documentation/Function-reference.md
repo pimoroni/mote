@@ -34,7 +34,7 @@ Note the show() method required to update all pixels after calling set_pixel.
 
 ## get_pixel
 
-Gets the RGB colour of a single pixel on a single channel, using the following parameters:
+Gets the RGB colour of a single pixel and the brightness(not currently used) on a single channel, using the following parameters:
 
 channel: channel, either 1, 2, 3 or 4, corresponding to numbers on Mote  
 index: index of the pixel to set, starting at 0 (0-15 for 16 pixels sticks)  

@@ -296,7 +296,7 @@ if __name__ == "__main__":
         for step in range(170):
             for channel in range(4):
                 for pixel in range(num_pixels):
-                    r, g, b = [int(c * 0.99) for c in mote.get_pixel(channel + 1, pixel)]
+                    r, g, b, z = [int(c * 0.99) for c in mote.get_pixel(channel + 1, pixel)]
                     mote.set_pixel(channel + 1, pixel, r, g, b)
 
             time.sleep(0.001)
