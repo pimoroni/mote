@@ -6,7 +6,7 @@ from sys import exit
 try:
     from flask import Flask, jsonify, make_response
 except ImportError:
-    exit("This script requires the flask module\nInstall with: sudo pip install flask")
+    raise ImportError("This script requires the flask module\nInstall with: sudo pip install flask")
 
 from mote import Mote
 

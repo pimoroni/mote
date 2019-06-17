@@ -10,7 +10,7 @@ from sys import exit
 try:
     import requests
 except ImportError:
-    exit("This script requires the requests module\nInstall with: sudo pip install requests")
+    raise ImportError("This script requires the requests module\nInstall with: sudo pip install requests")
 
 from mote import Mote
 
