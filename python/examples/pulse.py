@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # Adapted from blinkt example
 from mote import Mote
 import colorsys
@@ -11,13 +12,10 @@ mote.configure_channel(3, 16, False)
 mote.configure_channel(4, 16, False)
 
 
-
 try:
     import numpy as np
 except ImportError:
-    exit("This script requires the numpy module\nInstall with: sudo pip install numpy")
-
-
+    raise ImportError("This script requires the numpy module\nInstall with: sudo pip install numpy")
 
 
 def make_gaussian(fwhm):
@@ -27,6 +25,7 @@ def make_gaussian(fwhm):
     fwhm = fwhm
     gauss = np.exp(-4 * np.log(2) * ((x - x0) ** 2 + (y - y0) ** 2) / fwhm ** 2)
     return gauss
+
 
 try:
     while True:
@@ -41,17 +40,17 @@ try:
                 v = gauss[x, y]
                 rgb = colorsys.hsv_to_rgb(h, s, v)
                 r, g, b = [int(255.0 * i) for i in rgb]
-                mote.set_pixel(1,x, r, g, b)
-                mote.set_pixel(2,x, r, g, b)
-                mote.set_pixel(3,x, r, g, b)
-                mote.set_pixel(4,x, r, g, b)
+                mote.set_pixel(1, x, r, g, b)
+                mote.set_pixel(2, x, r, g, b)
+                mote.set_pixel(3, x, r, g, b)
+                mote.set_pixel(4, x, r, g, b)
             mote.show()
             end = time.time()
             t = end - start
-            if t < 0.04: time.sleep(0.04 - t)
-            
-except KeyboardInterrupt:
-	mote.clear()
-	mote.show()
-	quit()
+            if t < 0.04:
+                time.sleep(0.04 - t)
 
+except KeyboardInterrupt:
+    mote.clear()
+    mote.show()
+    quit()
