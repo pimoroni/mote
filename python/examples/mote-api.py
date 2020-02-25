@@ -68,10 +68,10 @@ def get_state(channel):
                 status['state'][chan] = 1
             else:
                 status['state'][chan] = 0
-        col = mote.get_pixel(chan, 0)
-        br = rgb_to_hsv(*col)[2]
-        status['colour'][chan] = list(col)
-        status['brightness'][chan] = br
+        r, g, b = mote.get_pixel(chan, 0)[0:3]
+        h, s, v = rgb_to_hsv(r, g, b)[2]
+        status['colour'][chan] = [r, g, b]
+        status['brightness'][chan] = v
     if channel == 'all':
         return jsonify(status)
     else:
